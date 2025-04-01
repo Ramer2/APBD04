@@ -109,9 +109,12 @@ public class EmpDeptSalgradeTests
         var emps = Database.GetEmps();
         var grades = Database.GetSalgrades();
 
-        // var result = null;
-        //
-        // Assert.Contains(result, r => r.EName == "ALLEN" && r.Grade == 3);
+        var result = (from e in emps 
+                join g in grades on true equals true // this looks SOOOO CURSED OMFG WHYYYYYYYYYY (I couldn't find a better way)
+                where e.Sal >= g.Losal && e.Sal <= g.Hisal
+            select new {e.EName, g.Grade});
+        
+        Assert.Contains(result, r => r.EName == "ALLEN" && r.Grade == 3);
     }
 
     // 9. Aggregation (AVG)
