@@ -84,7 +84,7 @@ public class EmpDeptSalgradeTests
         var emps = Database.GetEmps();
 
         var result = emps.GroupBy(e => e.DeptNo)
-            .Select(e => new {DeptNo = e.Key, Count = e.Count()}).ToList();
+            .Select(e => new {DeptNo = e.Key, Count = e.Count()}).ToList(); // key is a key to the group (from group by)
         
         Assert.Contains(result, g => g.DeptNo == 30 && g.Count == 2);
     }
@@ -96,9 +96,9 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        // var result = null; 
-        //
-        // Assert.All(result, r => Assert.NotNull(r.Comm));
+        var result = emps.Where(e => e.Comm != null).Select(e => new {e.EName, e.Comm}).ToList(); 
+        
+        Assert.All(result, r => Assert.NotNull(r.Comm));
     }
 
     // 8. Join with Salgrade
